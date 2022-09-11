@@ -1,2 +1,33 @@
-# TBS_Robotics_Low_Latency_Video_Transport_with_gstreamer
+# TBS Robotics Low Latency Video Transport with gstreamer
 TBS Robotics Low Latency Video Transport with gstreamer
+## Low latency for real-time robot driving
+- This a topic needs more study and experiment
+## gstreamer
+- Pipeline of video and image processing
+## Client side (JETSON Nano) setup
+- It captures images, re-size them, merge into single image, compress, and send through UDP
+```
+gst-launch-1.0 nvarguscamerasrc sensor-id=0 sensor-mode=4 \
+        ! 'video/x-raw(memory:NVMM),width=1280,height=720,format=NV12,framerate=60/1' \
+    ! nvvidconv flip-method=2 \
+        ! 'video/x-raw(memory:NVMM),format=RGBA,width=640,height=360' \
+    ! comp. nvarguscamerasrc sensor-id=1 sensor-mode=4 \
+        ! 'video/x-raw(memory:NVMM),width=1280,height=720,format=NV12,framerate=60/1' \
+    ! nvvidconv flip-method=2 \
+        ! 'video/x-raw(memory:NVMM),format=RGBA,width=640,height=360' \
+    ! nvcompositor name=comp sink_0::xpos=0 sink_0::ypos=0 sink_0::width=640 sink_0::height=360 sink_1::xpos=640 sink_1::ypos=0 sink_1::width=640 sink_1::height=360 \
+    ! nvvidconv \
+        ! 'video/x-raw(memory:NVMM),format=NV12,framerate=30/1' \
+    ! nvjpegenc \
+    ! rtpjpegpay \
+    ! udpsink host=192.168.0.100 port=5010
+```
+## Server side (control station laptop) setup
+- Receive video stream, decode, and display at window
+```
+gst-launch-1.0 udpsrc port=5010 ! application/x-rtp,encoding-name=JEPD ! rtpjpegdepay ! jpegdec ! autovideosink
+```
+## VLC for video display
+- TCP setup did not work well
+- UDP works but there is noticeable latency
+- VLC buffer time should be set to 0 for minimum latency
