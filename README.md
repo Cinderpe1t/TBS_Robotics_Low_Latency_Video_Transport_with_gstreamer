@@ -1,9 +1,9 @@
 # TBS Robotics Low Latency Video Transport with gstreamer
 TBS Robotics Low Latency Video Transport with gstreamer
 ## Low latency for real-time robot driving
-- This a topic needs more study and experiment
-## gstreamer
-- Pipeline of video and image processing
+- This a topic needs more study and improvement
+## [gstreamer](https://gstreamer.freedesktop.org/)
+- Pipeline of video and image processing framework
 ## Client side (JETSON Nano) setup
 - It captures images, re-size them, merge into single image, compress, and send through UDP
 ```
@@ -27,6 +27,17 @@ gst-launch-1.0 nvarguscamerasrc sensor-id=0 sensor-mode=4 \
 ```
 gst-launch-1.0 udpsrc port=5010 ! application/x-rtp,encoding-name=JEPD ! rtpjpegdepay ! jpegdec ! autovideosink
 ```
+## Example code
+- Connect two cameras to JETSON
+- Set up IP address for JETSON and client control station
+- Assign execution permission to both server and client scripts
+- Modify JETSON side code with control station IP address and port
+```
+ ! udpsink host=192.168.0.100 port=5010
+```
+- Control station needs port number only
+- At controller: `gstream_udp_player_1.sh`
+- At JETSON: `gst_stream_udp_0.sh`
 ## VLC for video display
 - TCP setup did not work well
 - UDP works but there is noticeable latency
