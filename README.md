@@ -36,8 +36,8 @@ gst-launch-1.0 udpsrc port=5010 ! application/x-rtp,encoding-name=JEPD ! rtpjpeg
  ! udpsink host=192.168.0.100 port=5010
 ```
 - Control station needs port number only
-- At controller: `gstream_udp_player_1.sh`
-- At JETSON: `gst_stream_udp_0.sh`
+- At controller terminal: `./gstream_udp_player_1.sh`
+- At JETSON terminal: `./gst_stream_udp_0.sh`
 ## VLC for video display
 - TCP setup did not work well
 - UDP works but there is noticeable latency
