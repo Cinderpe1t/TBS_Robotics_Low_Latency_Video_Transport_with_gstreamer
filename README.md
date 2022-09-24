@@ -30,7 +30,7 @@ gst-launch-1.0 udpsrc port=5010 ! application/x-rtp,encoding-name=JEPD ! rtpjpeg
 ## Example code
 - Connect two cameras to JETSON
 - Set up IP address for JETSON and client control station
-- Assign execution permission to both server and client scripts
+- Assign execution permission to both server and client scripts with `chmod 755 FILENAME`
 - Modify JETSON side code with control station IP address and port
 ```
  ! udpsink host=192.168.0.100 port=5010
@@ -39,6 +39,9 @@ gst-launch-1.0 udpsrc port=5010 ! application/x-rtp,encoding-name=JEPD ! rtpjpeg
 - At controller terminal: `./gstream_udp_player_1.sh`
 - At JETSON terminal: `./gst_stream_udp_0.sh`
 ## VLC for video display
-- TCP setup did not work well
+- TCP setup did not work well (with RTP)
 - UDP works but there is noticeable latency
 - VLC buffer time should be set to 0 for minimum latency
+
+
+[Next: RMRC 2022 server and client source code and set up](https://github.com/Cinderpe1t/TBS_Robotics_RMRC_2022_Source_Code_and_Setup) / [Top: Introduction](https://github.com/Cinderpe1t/TBS_Robotics_Introduction)
