@@ -1,7 +1,7 @@
 # TBS Robotics Low Latency Video Transport with gstreamer
 TBS Robotics Low Latency Video Transport with gstreamer
 ## Low latency for real-time robot driving
-- This is a topic that needs more study and improvement
+- This is a topic that needs more studying and improvement
 ## [gstreamer](https://gstreamer.freedesktop.org/)
 - Pipeline of video and image processing framework
 ## Client side (JETSON Nano) setup
